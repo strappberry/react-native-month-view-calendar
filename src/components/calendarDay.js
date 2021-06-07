@@ -1,24 +1,26 @@
-import React from 'react'
+import React, { Component} from 'react'
 import PropTypes from 'prop-types'
 import { Text, View } from 'react-native'
 
-const CalendarDay = ({ index, date, renderEvent, events, textStyles }) => {
-  const cellStyles = [
-    styles.cell,
-  ]
+class CalendarDay extends Component {
+  render() {
+    const { index, date, renderEvent, events, textStyles } = this.props;
+    const cellStyles = [
+      styles.cell,
+    ];
+    if (index == 0) {
+      cellStyles.push(styles.leftBorder)
+    }
 
-  if (index == 0) {
-    cellStyles.push(styles.leftBorder)
+    return (
+      <View style={cellStyles}>
+        <Text style={[styles.text, textStyles]}>
+          {date.getDate()}
+        </Text>
+        {events.map(renderEvent)}
+      </View>
+    );
   }
-
-  return (
-    <View style={cellStyles}>
-      <Text style={[styles.text, textStyles]}>
-        {date.getDate()}
-      </Text>
-      {events.map(renderEvent)}
-    </View>
-  )
 }
 
 CalendarDay.propTypes = {

@@ -14,6 +14,7 @@ npm install --save react-native-month-view-calendar
 
 ### Basic usage
 ```js
+import React from 'react';
 import { MonthViewCalendar } from 'react-native-month-view-calendar';
 import { View, ScrollView } from 'react-native'
 
@@ -49,6 +50,18 @@ const Component = () => {
 |headerTextStyles|{}|Styles for label week day name, can be array or object|
 |weekDays        |['S', 'M', 'T', 'W', 'T', 'F', 'S']|Array with name of the day of the week|
 |renderEvent     ||Function required to render event information. Example (event, index) => <Event key={index} />|
+
+### Methods
+To use the component methods save a reference to it:
+
+```js
+const reference = useRef();
+
+<MonthViewCalendar
+  ref={reference}
+/>
+```
+* __goToDate__ (date): the component navigates to a custom date, date variable must be an instance of Date. Example: _reference.current.goToDate(new Date());_
 
 ### Event object
 ```js

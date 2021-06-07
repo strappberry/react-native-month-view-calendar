@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 
-const CalendarRow = ({ children, borderColor }) => {
-  return (
-    <View style={styles.row(borderColor)}>
-      {children}
+class CalendarRow extends Component {
+  render() {
+    return <View style={styles.row(this.props.borderColor)}>
+      {this.props.children}
     </View>
-  )
+  }
 }
+
 
 CalendarRow.propTypes = {
   borderColor: PropTypes.string,

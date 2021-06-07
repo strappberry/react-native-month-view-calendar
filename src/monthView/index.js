@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
 import { getDaysOfCalendarMonth, findEventsForTheDay } from '../utils'
@@ -7,34 +7,56 @@ import CalendarHeader from '../components/calendarHeader'
 import CalendarRow from '../components/calendarRow'
 import CalendarDay from '../components/calendarDay'
 import { WeekDaysError } from '../errors/weekDaysError'
+import { DateError } from 'react-native-month-view-calendar/src/errors/dateError'
 
-const MonthView = ({
-  date,
-  weekDays,
-  events,
-  headerTextStyles,
-  dayTextStyles,
-  renderEvent
-}) => {
-  if (weekDays.length != 7) {
-    throw new WeekDaysError('The length of the weekDays array must be 7');
+class MonthView extends Component {
+
+  state = {
+    date: null,
   }
 
-  const renderWeekCalendar = () => {
-    const days = getDaysOfCalendarMonth(date)
+  constructor(props) {
+    super(props);
+
+    if (props.weekDays.length != 7) {
+      throw new WeekDaysError('The length of the weekDays array must be 7');
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      date: this.props.date,
+    })
+  }
+
+  /**
+   * Change month that showing
+   * @param {Date} date 
+   */
+  goToDate(date) {
+    if (!date instanceof Date) {
+      throw new DateError('date variable must be an instance of Date');
+    }
+    this.setState({
+      date: date,
+    })
+  }
+
+  renderWeekCalendar() {
+    const days = getDaysOfCalendarMonth(this.state.date)
 
     return days.map((week, i) => (
       <CalendarRow key={`week-${i}`}>
         {week.map((day, j) => {
-          const eventsOfDay = findEventsForTheDay(day, events)
+          const eventsOfDay = findEventsForTheDay(day, this.props.events)
           return (
             <CalendarDay
               key={j}
               index={j}
               date={day}
               events={eventsOfDay}
-              renderEvent={renderEvent}
-              textStyles={dayTextStyles}
+              renderEvent={this.props.renderEvent}
+              textStyles={this.props.dayTextStyles}
             />
           )
         })}
@@ -42,15 +64,22 @@ const MonthView = ({
     ))
   }
 
-  return (
-    <View style={styles.calendarContainer}>
-      <CalendarHeader
-        weekDays={weekDays}
-        textStyles={headerTextStyles}
-      />
-      {renderWeekCalendar()}
-    </View>
-  )
+  render() {
+    if (!this.state.date) {
+      return null;
+    }
+
+    const { weekDays, headerTextStyles } = this.props;
+    return (
+      <View style={styles.calendarContainer}>
+        <CalendarHeader
+          weekDays={weekDays}
+          textStyles={headerTextStyles}
+        />
+        {this.renderWeekCalendar()}
+      </View>
+    )
+  }
 }
 
 MonthView.propTypes = {
