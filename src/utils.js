@@ -1,4 +1,8 @@
+import { Dimensions } from 'react-native';
 import { DateError } from './errors/dateError'
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+export const CONTAINER_WIDTH = SCREEN_WIDTH;
 
 /**
  * Get days for month calendar

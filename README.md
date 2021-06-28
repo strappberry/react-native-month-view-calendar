@@ -50,6 +50,9 @@ const Component = () => {
 |headerTextStyles|{}|Styles for label week day name, can be array or object|
 |weekDays        |['S', 'M', 'T', 'W', 'T', 'F', 'S']|Array with name of the day of the week|
 |renderEvent     ||Function required to render event information. Example (event, index) => <Event key={index} />|
+|onSwipe         ||Callback when calendar is swiped|
+|onSwipePrev     ||Callback when calendar is swiped to previous month|
+|onSwipeNext     ||Callback when calendar is swiped to next month|
 
 ### Methods
 To use the component methods save a reference to it:
@@ -61,7 +64,8 @@ const reference = useRef();
   ref={reference}
 />
 ```
-* __goToDate__ (date): the component navigates to a custom date, date variable must be an instance of Date. Example: _reference.current.goToDate(new Date());_
+* __goToDate(date)__: the component navigates to a custom date, date variable must be an instance of Date. Example: _reference.current.goToDate(new Date());_
+* __getCurrentDate()__ returns current date that being displayed
 
 ### Event object
 ```js
