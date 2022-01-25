@@ -2,14 +2,20 @@
   "name": "react-native-month-view-calendar",
   "version": "0.1.3",
   "description": "Calendar month view to display events",
-  "main": "index.js",
-  "scripts": {},
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
   "dependencies": {
     "prop-types": "^15.7.2"
   },
-  "devDependencies": {
+  "devDependencies": {},
+  "peerDependencies": {
+    "@types/react": "^17.0.37",
+    "@types/react-native": "^0.64.0",
     "react": "^17.0.1",
-    "react-native": "^0.64.0"
+    "react-native": "^0.64.0",
+    "typescript": "^4.5.3"
   },
   "repository": {
     "type": "git",

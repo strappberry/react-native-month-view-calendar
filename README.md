@@ -53,6 +53,7 @@ const Component = () => {
 |onSwipe         ||Callback when calendar is swiped|
 |onSwipePrev     ||Callback when calendar is swiped to previous month|
 |onSwipeNext     ||Callback when calendar is swiped to next month|
+|onScrollToIndexFailed || Callback to handle errors on swipe|
 
 ### Methods
 To use the component methods save a reference to it:

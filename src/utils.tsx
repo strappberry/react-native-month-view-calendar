@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import { DateError } from './errors/dateError'
+import { Event } from './contracts/event';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 export const CONTAINER_WIDTH = SCREEN_WIDTH;
@@ -8,7 +8,7 @@ export const CONTAINER_WIDTH = SCREEN_WIDTH;
  * Get days for month calendar
  * @param {Date} currentDate 
  */
-export function getDaysOfCalendarMonth (currentDate) {
+export function getDaysOfCalendarMonth (currentDate: Date) {
   let date = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
   const days = []
   while (date.getMonth() === currentDate.getMonth()) {
@@ -29,7 +29,7 @@ export function getDaysOfCalendarMonth (currentDate) {
       days.push(new Date(lastDate))
     }
   }
-  let result = days.reduce((resultArray, item, index) => {
+  let result = days.reduce((resultArray: any[], item: Date, index: number) => {
     const chunkIndex = Math.floor(index/7)
     if(!resultArray[chunkIndex]) {
       resultArray[chunkIndex] = []
@@ -47,12 +47,8 @@ export function getDaysOfCalendarMonth (currentDate) {
  * @param {Array} events 
  * @returns Array
  */
-export function findEventsForTheDay (date, events) {
+export function findEventsForTheDay (date: Date, events: Event[]): Event[] {
   return events.filter((event, index) => {
-    if (! event.date instanceof Date) {
-      throw new DateError(`Property date of event is not valid Date object, index: ${index}`)
-    }
-
     return event.date.getDate() == date.getDate()
       && event.date.getMonth() == date.getMonth()
       && event.date.getFullYear() == date.getFullYear();
