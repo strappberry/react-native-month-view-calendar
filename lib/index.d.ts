@@ -6,7 +6,8 @@ interface MonthViewProps {
     weekDays: string[];
     events: Event[];
     headerTextStyles: any;
-    dayTextStyles?: any;
+  dayTextStyles?: any;
+  cellStyles?: any;
     renderEvent: (event: Event, index: number) => any;
     onSwipe?: (date: Date) => void;
     onSwipePrev?: (date: Date) => void;
@@ -26,7 +27,8 @@ declare class MonthViewCalendar extends React.Component<MonthViewProps, MonthVie
         date: Date;
         weekDays: string[];
         headerTextStyles: {};
-        dayTextStyles: {};
+      dayTextStyles: {};
+      cellStyles: {};
     };
     state: MonthViewState;
     pageOffset: number;
