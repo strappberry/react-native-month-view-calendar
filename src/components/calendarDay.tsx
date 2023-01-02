@@ -8,16 +8,23 @@ interface CalendarDayProps {
     renderEvent: (value: Event, index: number, array: Event[]) => React.ReactNode;
     events: Event[];
     textStyles: {} | [];
+    viewStyles: {} | [];
 }
 
 class CalendarDay extends React.Component<CalendarDayProps> {
-  static defaultProps: { textStyles: {}; };
+  static defaultProps: { textStyles: {}; viewStyles: {}; };
 
   render() {
     const { index, date, renderEvent, events, textStyles } = this.props;
     const cellStyles: any[] = [styles.cell];
     if (index === 0) {
         cellStyles.push(styles.leftBorder);
+    }
+
+    if (Array.isArray(this.props.viewStyles)) {
+        cellStyles.push(...this.props.viewStyles);
+    } else {
+        cellStyles.push(this.props.viewStyles);
     }
 
     return (
@@ -33,6 +40,7 @@ class CalendarDay extends React.Component<CalendarDayProps> {
 
 CalendarDay.defaultProps = {
     textStyles: {},
+    viewStyles: {},
 }
 
 const styles = StyleSheet.create({

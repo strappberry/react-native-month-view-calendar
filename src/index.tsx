@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, VirtualizedList, Animated, StyleSheet, NativeSyntheticEvent, NativeScrollEvent, Text } from 'react-native'
+import { View, VirtualizedList, Animated, StyleSheet, NativeSyntheticEvent, NativeScrollEvent, Text, ViewStyle } from 'react-native'
 import { Event } from './contracts/event';
 import CalendarHeader from './components/calendarHeader';
 import CalendarRow from './components/calendarRow';
@@ -10,7 +10,7 @@ import {
     getDaysOfCalendarMonth,
     findEventsForTheDay,
     CONTAINER_WIDTH,
-  } from './utils'
+} from './utils'
 
 interface MonthViewProps {
     date: Date,
@@ -18,6 +18,8 @@ interface MonthViewProps {
     events: Event[],
     headerTextStyles: any,
     dayTextStyles?: any,
+    pastMonthsCellStyles?: ViewStyle,
+    cellStyles?: ViewStyle,
     renderEvent: (event: Event, index: number) => any,
     onSwipe?: (date: Date) => void,
     onSwipePrev?: (date: Date) => void,
@@ -40,6 +42,8 @@ class MonthViewCalendar extends React.Component<MonthViewProps, MonthViewState> 
         weekDays: string[];
         headerTextStyles: {};
         dayTextStyles: {};
+        pastMonthsCellStyles: {};
+        cellStyles: {};
     };
 
     state: MonthViewState = {
@@ -52,9 +56,11 @@ class MonthViewCalendar extends React.Component<MonthViewProps, MonthViewState> 
     monthVirtualList?: VirtualizedList<any>;
     eventsGridScrollX: Animated.Value;
     movingScroll: boolean;
+    now: Date;
 
     constructor(props: MonthViewProps) {
         super(props);
+        this.now = new Date();
         this.pageOffset = 2;
         this.currentPageIndex = this.pageOffset;
         this.eventsGridScrollX = new Animated.Value(0);
@@ -212,7 +218,13 @@ class MonthViewCalendar extends React.Component<MonthViewProps, MonthViewState> 
         return days.map((week, i) => (
             <CalendarRow key={`week-${i}`}>
                 {week.map((day: Date, j: number) => {
+                    day.setHours(23, 59, 59)
                     const eventsOfDay = findEventsForTheDay(day, this.props.events)
+                    const viewStyles = [
+                        this.props.cellStyles,
+                        (this.now > day ? this.props.pastMonthsCellStyles : {})
+                    ];
+
                     return (
                         <CalendarDay
                             key={j}
@@ -221,6 +233,7 @@ class MonthViewCalendar extends React.Component<MonthViewProps, MonthViewState> 
                             events={eventsOfDay}
                             renderEvent={this.props.renderEvent}
                             textStyles={this.props.dayTextStyles}
+                            viewStyles={viewStyles}
                         />
                     )
                 })}
@@ -282,6 +295,8 @@ MonthViewCalendar.defaultProps = {
     weekDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
     headerTextStyles: {},
     dayTextStyles: {},
+    pastMonthsCellStyles: {},
+    cellStyles: {},
 }
 
 const styles = StyleSheet.create({

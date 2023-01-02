@@ -6,10 +6,12 @@ interface CalendarDayProps {
     renderEvent: (value: Event, index: number, array: Event[]) => React.ReactNode;
     events: Event[];
     textStyles: {} | [];
+    viewStyles: {} | [];
 }
 declare class CalendarDay extends React.Component<CalendarDayProps> {
     static defaultProps: {
         textStyles: {};
+        viewStyles: {};
     };
     render(): JSX.Element;
 }

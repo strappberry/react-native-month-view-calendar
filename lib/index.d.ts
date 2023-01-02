@@ -1,5 +1,5 @@
 import React from 'react';
-import { VirtualizedList, Animated, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { VirtualizedList, Animated, NativeSyntheticEvent, NativeScrollEvent, ViewStyle } from 'react-native';
 import { Event } from './contracts/event';
 interface MonthViewProps {
     date: Date;
@@ -7,6 +7,8 @@ interface MonthViewProps {
     events: Event[];
     headerTextStyles: any;
     dayTextStyles?: any;
+    pastMonthsCellStyles?: ViewStyle;
+    cellStyles?: ViewStyle;
     renderEvent: (event: Event, index: number) => any;
     onSwipe?: (date: Date) => void;
     onSwipePrev?: (date: Date) => void;
@@ -27,6 +29,8 @@ declare class MonthViewCalendar extends React.Component<MonthViewProps, MonthVie
         weekDays: string[];
         headerTextStyles: {};
         dayTextStyles: {};
+        pastMonthsCellStyles: {};
+        cellStyles: {};
     };
     state: MonthViewState;
     pageOffset: number;
@@ -34,6 +38,7 @@ declare class MonthViewCalendar extends React.Component<MonthViewProps, MonthVie
     monthVirtualList?: VirtualizedList<any>;
     eventsGridScrollX: Animated.Value;
     movingScroll: boolean;
+    now: Date;
     constructor(props: MonthViewProps);
     /**
      * Calculate initial array of dates

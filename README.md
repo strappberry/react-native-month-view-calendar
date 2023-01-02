@@ -29,6 +29,7 @@ const Component = () => {
   return (
     <ScrollView>
       <MonthViewCalendar
+        cellStyles={{ minHeight: 65 }}
         events={eventsForCalendar}
         renderEvent={(event, i) => {
           return (
@@ -48,6 +49,8 @@ const Component = () => {
 |dayTextStyles   |{}|Styles for label day(numer of day), can be array or object|
 |events          || Array of events|
 |headerTextStyles|{}|Styles for label week day name, can be array or object|
+|cellStyles      |{}|Styles for all cells|
+|pastMonthsCellStyles|{}|Styles for all cells from past dates|
 |weekDays        |['S', 'M', 'T', 'W', 'T', 'F', 'S']|Array with name of the day of the week|
 |renderEvent     ||Function required to render event information. Example (event, index) => <Event key={index} />|
 |onSwipe         ||Callback when calendar is swiped|
